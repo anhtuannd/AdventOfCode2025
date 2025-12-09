@@ -42,7 +42,7 @@ class Day5 {
     fun process2() {
         val rangeList = mutableListOf<Pair<Long, Long>>()
         var isItem = false
-        var count = 0
+        var count = 0L
         File("input5.txt").forEachLine {
             if (it.trim() == "") {
                 isItem = true
@@ -59,9 +59,21 @@ class Day5 {
         }
         rangeList.sortBy { it.first }
 
-        for (index in 0..<rangeList.size) {
-
+        var index = 0
+        while (index < rangeList.size) {
+            val start = rangeList[index].first
+            var end = rangeList[index].second
+            index++
+            while (index < rangeList.size && rangeList[index].first <= end) {
+                if (rangeList[index].second > end) {
+                    end = rangeList[index].second
+                }
+                index++
+            }
+            count += end - start + 1
         }
+
+        println(count)
     }
 }
 
